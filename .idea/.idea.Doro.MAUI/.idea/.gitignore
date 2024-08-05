@@ -4,6 +4,7 @@
 # Rider ignored files
 /contentModel.xml
 /.idea.Doro.MAUI.iml
+/.idea/
 /modules.xml
 /projectSettingsUpdater.xml
 # Editor-based HTTP Client requests
