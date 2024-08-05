@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Doro.MAUI.Views.MainView"
+             xmlns:vm="clr-namespace:Doro.MAUI.ViewModels"
+             x:DataType="vm:MainViewModel"
+             HideSoftInputOnTapped="True">
+    <ContentPage.Background>
+        <LinearGradientBrush>
+            <GradientStop Color="#eeaeca"
+                          Offset="0.01" />
+            <GradientStop Color="#94bbe9"
+                          Offset="1.00" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+    <ContentPage.Content>
+        <VerticalStackLayout Spacing="50"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center">
+            <VerticalStackLayout>
+                <ProgressBar Progress="{Binding ProgressCount}"
+                             WidthRequest="400"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout Spacing="40">
+                <VerticalStackLayout VerticalOptions="Center"
+                                     HorizontalOptions="Center"
+                                     Spacing="20">
+                    <Entry Text="{Binding TimeLeftInMinutes}"
+                           FontSize="70"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center"
+                           TextColor="Black"
+                           Keyboard="Numeric"
+                           IsTextPredictionEnabled="False"
+                           FontAttributes="Bold"/>
+                    <Label Text="{Binding Result, StringFormat='{0:mm ss}'}"
+                           FontSize="50"
+                           TextColor="Black"/>
+                </VerticalStackLayout>
+                <HorizontalStackLayout VerticalOptions="Center"
+                                       HorizontalOptions="Center"
+                                       Spacing="15">
+                    <Button Text="Start" 
+                            Command="{Binding CalculateTimeLeftCommand}"/>
+                    <Button Text="Stop" />
+                    <Button Text="Pauza" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</ContentPage>
