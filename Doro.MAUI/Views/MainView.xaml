@@ -5,6 +5,7 @@
              x:Class="Doro.MAUI.Views.MainView"
              xmlns:vm="clr-namespace:Doro.MAUI.ViewModels"
              x:DataType="vm:MainViewModel"
+             Shell.NavBarIsVisible="False"
              HideSoftInputOnTapped="True">
     <ContentPage.Background>
         <LinearGradientBrush>
@@ -42,9 +43,14 @@
                                        HorizontalOptions="Center"
                                        Spacing="15">
                     <Button Text="Start" 
-                            Command="{Binding CalculateTimeLeftCommand}"/>
-                    <Button Text="Stop" />
-                    <Button Text="Pauza" />
+                            Command="{Binding CalculateTimeLeftCommand}"
+                            CommandParameter="Start"/>
+                    <Button Text="Reset"
+                            Command="{Binding CalculateTimeLeftCommand}"
+                            CommandParameter="Stop"/>
+                    <Button Text="Pauza" 
+                            Command="{Binding CalculateTimeLeftCommand}"
+                            CommandParameter="Pauza"/>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
         </VerticalStackLayout>

@@ -6,10 +6,9 @@
     xmlns:local="clr-namespace:Doro.MAUI"
     xmlns:view="clr-namespace:Doro.MAUI.Views"
     Shell.FlyoutBehavior="Disabled"
-    Title="Doro.MAUI">
+    Title="Doro - Super simple pomodoro app">
 
     <ShellContent
-        Title="Home"
         ContentTemplate="{DataTemplate view:MainView}"
         Route="MainPage" />
 

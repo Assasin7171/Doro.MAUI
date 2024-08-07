@@ -9,35 +9,72 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty] private string _timeLeftInMinutes = "0";
     [ObservableProperty] private double _progressCount;
     private int _count;
+    private bool _isChange = false;
+    private readonly Timer _timer;
+    private int _timeLeftInSeconds = 0;
+    private int _totalTimeInSeconds = 0;
+
+    public MainViewModel()
+    {
+        _timer = new Timer();
+    }
 
     [ObservableProperty] private TimeSpan _result;
 
     [RelayCommand]
-    private void CalculateTimeLeft()
+    private void CalculateTimeLeft(string param)
     {
-        //w minutach
-        if (int.TryParse(TimeLeftInMinutes, out int result))
+        _count = 0;
+        
+        if (param == "Start")
         {
-            var timeLeftInSeconds = result * 60;
-            var totalTimeInSeconds = result * 60;
-            if (timeLeftInSeconds > 0)
+            //_timer.Dispose();
+            //w minutach
+            if (int.TryParse(TimeLeftInMinutes, out int result))
             {
-                Timer timer = new Timer(1000);
-                timer.Elapsed += (sender, args) =>
+                _timeLeftInSeconds = result * 60;
+                _totalTimeInSeconds = result * 60;
+                if (_timeLeftInSeconds > 0)
                 {
-                    timeLeftInSeconds -= 1;
-                    _count++;
-                    if (timeLeftInSeconds == 0)
+                    _timer.Interval = 1000;
+                    _timer.Elapsed += (sender, args) =>
                     {
-                        timer.Stop();
-                    }
+                        _timeLeftInSeconds -= 1;
+                        _count++;
+                        if (_timeLeftInSeconds == 0)
+                        {
+                            _timer.Stop();
+                        }
 
-                    Result = new TimeSpan(0, 0, timeLeftInSeconds);
-                    ProgressCount = CalculateProgress(_count, totalTimeInSeconds);
-                };
-                timer.Start();
+                        Result = new TimeSpan(0, 0, _timeLeftInSeconds);
+                        ProgressCount = CalculateProgress(_count, _totalTimeInSeconds);
+                    };
+                    _timer.Start();
+                }
             }
         }
+        else if (param == "Stop")
+        {
+            _timer.Stop();
+            ProgressCount = 0;
+            _count = 0;
+            Result = TimeSpan.Zero;
+        }
+        else if (param == "Pauza")
+        {
+            switch (_isChange)
+            {
+                case false:
+                    _timer.Stop();
+                    _isChange = true;
+                    break;
+                case true:
+                    _timer.Start();
+                    _isChange = false;
+                    break;
+            }
+        }
+        
     }
 
     private double CalculateProgress(double howMuchSecondsHasPassed, double totalTimeInSeconds)
